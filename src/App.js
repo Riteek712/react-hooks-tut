@@ -1,23 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect , useRef} from 'react';
+
 
 function App() {
+  const [input, setInput] =useState("")
+  const prevState = useRef('')
+  const counter = useRef(0)
+  useEffect( ()=>{
+    prevState.current = input;
+    console.log(`rendered.`)
+    counter.current++;
+  }, [input])
+  const formHandler = (e) =>{
+    setInput(e.target.value);
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <input value={input} onChange={formHandler} />
+      <h4>Applications have been rendered {counter.current} times previous state{prevState.current}. input = {input}.</h4>
     </div>
   );
 }
